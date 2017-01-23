@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+body {
+  font-family: Helvetica, Serif-serif;
+  background-color: #FAFAFA;
+  color: #4b4b4b;
+}
+
+a:link {
+  color: #005585;
+  text-decoration: none;
+}
+a:visited {
+  color: #485270;
+}
+a:hover {
+  color: #b83800;
+  text-decoration: underline;
+}
+
+#header {
+  height: 30px;
+  line-height: 30px;
+  border-bottom: 2px solid #2C82C9;
+}
+
+.search {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+}
