@@ -6,22 +6,28 @@ body {
   color: #4b4b4b;
 }
 
-a:link {
-  color: #005585;
+a {
+  color: #2C82C9;
   text-decoration: none;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
 }
-a:visited {
-  color: #485270;
-}
+
 a:hover {
-  color: #b83800;
-  text-decoration: underline;
+  color: #36454F;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
 }
 
 #header {
   height: 30px;
   line-height: 30px;
   border-bottom: 2px solid #2C82C9;
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 2rem;
 }
 
 .search {

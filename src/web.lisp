@@ -47,8 +47,13 @@
 
 ;;
 ;; Error pages
+(defun error-reason (error-code)
+  (let ((http-error
+         '((404 . "Not Found")
+           (403 . "Insufficient Permissions"))))
+    (cdr (assoc error-code http-error))))
 
-(defmethod on-exception ((app <web>) (code (eql 404)))
+(defmethod on-exception ((app <web>) error-code)
   (declare (ignore app))
-  (merge-pathnames #P"_errors/404.html"
-                   *template-directory*))
+  (render "error.html"
+          (list :error-code error-code :error-message (error-reason error-code))))
