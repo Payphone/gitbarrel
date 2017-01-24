@@ -2,9 +2,14 @@
 {% block title %}{{ repository }}{% endblock %}
 {% block content %}
 <div id="content" class="row">
-  <ul>
+  <ul class="col c4">
     {% for file in files %}
     <li><a href="/{{user}}/{{repository}}/{{file}}">{{ file }}</a></li>
+    {% endfor %}
+  </ul>
+  <ul class="col c4">
+    {% for tag in tags %}
+    <li>{{ tag }}</li>
     {% endfor %}
   </ul>
 </div>

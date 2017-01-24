@@ -15,23 +15,35 @@
 (defclass <web> (<app>) ())
 (defvar *web* (make-instance '<web>))
 (clear-routing-rules *web*)
-(defparameter *repositories* #P"~/git/")
+(defparameter *repositories* (merge-paths *application-root* #P"git/"))
+
 ;;
 ;; Routing rules
 
 (defroute "/" ()
   (render #P"index.html"))
 
+(defroute ("/([\\w]+)/([\\w]+)/(.+)" :regexp :t) (&key captures)
+  (let ((name (first captures))
+        (repository (second captures))
+        (file (third captures)))
+    (render (merge-paths *repositories*
+                         name
+                         repository
+                         file))))
+
 (defroute ("/([\\w]+)/([\\w]+)" :regexp :t) (&key captures)
   (let ((user (first captures))
-        (repository (second captures)))
-    (render #P "repository.html"
+        (repository (second captures))
+        (file (third captures)))
+    (render #P"repository.html"
             (list :repository repository
                   :user user
-                  :files (mapcar #'name (tracked-files
-                                         (merge-paths *repositories*
-                                                      (force-directory user)
-                                                      repository)))))))
+                  :files (mapcar #'name
+                                 (tracked-files
+                                  (merge-paths *repositories*
+                                               user
+                                               repository)))))))
 
 ;;
 ;; Error pages
