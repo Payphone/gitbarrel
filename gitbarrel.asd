@@ -14,6 +14,7 @@
                #:cl-ppcre
                #:uiop
                #:git-info
+               #:files-and-folders
 
                ;; HTML Template
                #:djula)

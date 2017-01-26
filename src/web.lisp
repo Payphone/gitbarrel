@@ -33,20 +33,19 @@
                          file))))
 
 (defroute ("/([\\w]+)/([\\w]+)" :regexp :t) (&key captures)
-  (let ((user (first captures))
-        (repository (second captures))
-        (file (third captures)))
+  (let* ((user (first captures))
+         (directory (second captures))
+         (file (third captures))
+         (repository (merge-paths *repositories* user directory)))
     (render #P"repository.html"
             (list :repository repository
                   :user user
-                  :files (mapcar #'name
-                                 (tracked-files
-                                  (merge-paths *repositories*
-                                               user
-                                               repository)))))))
+                  :files (mapcar #'name (tracked-files repository))
+                  :tags (tags repository)))))
 
 ;;
 ;; Error pages
+
 (defun error-reason (error-code)
   (let ((http-error
          '((404 . "Not Found")

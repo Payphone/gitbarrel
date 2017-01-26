@@ -8,15 +8,15 @@
 </head>
 <body>
   <div id="header" class="row">
-    <div class="col c4" id="header-links">
+    <span class="col c4" id="header-links">
       <a href="/">Home</a>
       <a href="Projects">Projects</a>
-    </div>
-    <div class="col c4 title center">{% block title %}{% endblock %}</div>
-    <div class="col c4 search">
+    </span>
+    <span class="col c4 title center">{% block title %}{% endblock %}</span>
+    <span class="col c4 search">
       <input id="search"></input>
       <input id="submit" type="submit" value="Search"></input>
-    </div>
+    </span>
   </div>
   {% block content %}{% endblock %}
 </body>
