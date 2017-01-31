@@ -31,7 +31,7 @@
 ;; Execute package definition
 
 (defpackage gitbarrel.djula
-  (:use #:cl)
+  (:use #:cl #:git-info)
   (:import-from #:gitbarrel.config
                 #:config
                 #:appenv

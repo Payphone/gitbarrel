@@ -23,7 +23,7 @@
 (defroute "/" ()
   (render #P"index.html"))
 
-(defroute ("/([\\w]+)/([\\w]+)/(.+)" :regexp :t) (&key captures)
+(defroute ("/(.+)/(.+)/(.+)" :regexp :t) (&key captures)
   (let ((name (first captures))
         (repository (second captures))
         (file (third captures)))
@@ -32,16 +32,18 @@
                          repository
                          file))))
 
-(defroute ("/([\\w]+)/([\\w]+)" :regexp :t) (&key captures)
+(defroute ("/(.+)/(.+)" :regexp :t) (&key captures)
   (let* ((user (first captures))
          (directory (second captures))
-         (file (third captures))
          (repository (merge-paths *repositories* user directory)))
     (render #P"repository.html"
-            (list :repository repository
+            (list :directory directory
                   :user user
-                  :files (mapcar #'name (tracked-files repository))
-                  :tags (tags repository)))))
+                  :files (tracked-files repository)
+                  :tags (tags repository)
+                  :commits (remove-if-not #'(lambda (c)
+                                              (string= "commit" (gitlog-type c)))
+                                          (logs repository))))))
 
 ;;
 ;; Error pages
