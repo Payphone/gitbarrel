@@ -19,10 +19,10 @@
       <ul class="col c11">
         {% for commit in commits %}
         <li class="row">
-          <span class="col c1">{{ commit.gitlog-date|date }}</span>
-          <span class="col c4">{{ commit.gitlog-message }}</span>
+          <span class="col c1">{{ commit.date|date }}</span>
+          <span class="col c4">{{ commit.message }}</span>
           <span class="col c4">
-            {{ commit.gitlog-author }} {{ commit.gitlog-email }}
+            {{ commit.gitlog-author }} {{ commit.email }}
           </span>
         </li>
         {% endfor %}

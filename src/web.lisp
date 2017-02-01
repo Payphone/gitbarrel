@@ -42,7 +42,7 @@
                   :files (tracked-files repository)
                   :tags (tags repository)
                   :commits (remove-if-not #'(lambda (c)
-                                              (string= "commit" (gitlog-type c)))
+                                              (string= "commit" (log-type c)))
                                           (logs repository))))))
 
 ;;
