@@ -4,6 +4,7 @@
         #:caveman2
         #:gitbarrel.config
         #:gitbarrel.view
+        #:peyton-utils
         #:git-info
         #:files-and-folders)
   (:export #:*web*))
@@ -24,13 +25,15 @@
   (render #P"index.html"))
 
 (defroute ("/(.+)/(.+)/(.+)" :regexp :t) (&key captures)
-  (let ((name (first captures))
-        (repository (second captures))
-        (file (third captures)))
-    (render (merge-paths *repositories*
-                         name
-                         repository
-                         file))))
+  (let* ((user (first captures))
+         (directory (second captures))
+         (repository (merge-paths *repositories* user directory))
+         (file (third captures)))
+    (render #P"file.html"
+            (list :file (read-file (merge-paths repository file))
+                  :files (tracked-files repository)
+                  :directory directory
+                  :user user))))
 
 (defroute ("/(.+)/(.+)" :regexp :t) (&key captures)
   (let* ((user (first captures))

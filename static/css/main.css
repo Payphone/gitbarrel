@@ -19,6 +19,18 @@ a:hover {
   transition: 0.2s ease;
 }
 
+.center {
+  text-align: center;
+}
+
+code {
+  white-space: pre-wrap;
+}
+
+.code-content {
+  padding-left: 25px;
+}
+
 #header {
   height: 30px;
   line-height: 30px;
@@ -32,10 +44,6 @@ h2 {
 
 .search {
   text-align: right;
-}
-
-.center {
-  text-align: center;
 }
 
 ul {

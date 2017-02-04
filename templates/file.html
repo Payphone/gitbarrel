@@ -1,0 +1,14 @@
+{% extends "layouts/default.html" %}
+{% block title %}{{ repository }}{% endblock %}
+{% block content %}
+<div id="content" class="row">
+  <ul class="col c2">
+    <a href="/{{ user }}/{{ directory }}"><b>{{ directory }}</b></a>
+    <hr />
+    {% for file in files %}
+    <li><a href="/{{ user }}/{{ directory }}/{{ file.name }}">{{ file.name }}</a></li>
+    {% endfor %}
+  </ul>
+  <code class="col c9 code-content">{{ file }}</code>
+</div>
+{% endblock %}
