@@ -27,8 +27,8 @@ code {
   white-space: pre-wrap;
 }
 
-.code-content {
-  padding-left: 25px;
+.sidebar {
+  padding-right: 25px;
 }
 
 #header {

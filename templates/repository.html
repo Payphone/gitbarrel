@@ -2,26 +2,21 @@
 {% block title %}{{ repository }}{% endblock %}
 {% block content %}
 <div id="content" class="row">
-  <ul class="col c2">
+  <ul class="col c2 sidebar">
     <a href="/{{ user }}/{{ directory }}"><b>{{ directory }}</b></a>
     <hr />
     {% for file in files %}
     <li><a href="/{{ user }}/{{ directory }}/{{ file.name }}">{{ file.name }}</a></li>
     {% endfor %}
   </ul>
-  <span class="col c10">
+  <span class="col c9">
     <span class="row">
-      <ul class="col c1">
-        {% for tag in tags %}
-        <li>{{ tag }}</li>
-        {% endfor %}
-      </ul>
       <ul class="col c11">
         {% for commit in commits %}
         <li class="row">
-          <span class="col c1">{{ commit.date|date }}</span>
-          <span class="col c4">{{ commit.message }}</span>
-          <span class="col c4">
+          <span class="col c2">{{ commit.date|date }}</span>
+          <span class="col c5">{{ commit.message }}</span>
+          <span class="col c5">
             {{ commit.gitlog-author }} {{ commit.email }}
           </span>
         </li>
