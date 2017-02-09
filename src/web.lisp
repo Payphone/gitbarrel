@@ -18,11 +18,30 @@
 (clear-routing-rules *web*)
 (defparameter *repositories* (merge-paths *application-root* #P"git/"))
 
+(defun generate-index ()
+  (with-open-file (in (merge-paths *repositories* "index")
+                      :if-exists :supersede
+                      :if-does-not-exist :create
+                      :direction :output)
+    (format in "~{~S~%~^~}" (list-all-files *repositories*))))
+
+(defun search-for-file (search-term)
+  (let ((term (string-upcase search-term)))
+    (with-open-file (in (merge-paths *repositories* "index"))
+      (loop for path = (read in nil :EOF)
+         until (eq path :EOF)
+           when (search term (string-upcase (pathname-name path)))
+         collect (shorten-directory path "git")))))
+
 ;;
 ;; Routing rules
 
 (defroute "/" ()
   (render #P"index.html"))
+
+(defroute ("/search" :method :POST) (&key |term|)
+  (render #P"search.html"
+          (list :files (search-for-file |term|))))
 
 (defroute ("/(.+)/(.+)/(.+)" :regexp :t) (&key captures)
   (let* ((user (first captures))

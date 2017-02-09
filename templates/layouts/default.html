@@ -13,8 +13,8 @@
       <a href="Projects">Projects</a>
     </span>
     <span class="col c4 title center">{% block title %}{% endblock %}</span>
-    <span class="col c4 search">
-      <input id="search"></input>
+    <form action="/search" method="post" class="col c4 search">
+      <input id="search" name="term"></input>
       <input id="submit" type="submit" value="Search"></input>
     </span>
   </div>
