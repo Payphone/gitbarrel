@@ -40,6 +40,9 @@
   (render #P"index.html"))
 
 (defroute ("/search" :method :POST) (&key |term|)
+  (redirect (cat "/search?term=" |term|)))
+
+(defroute "/search" (&key |term|)
   (render #P"search.html"
           (list :files (search-for-file |term|))))
 

@@ -3,7 +3,11 @@
 {% block content %}
 <ul>
   {% for file in files %}
-    <li><a href="/{{ file.princ-to-string }}">{{ file.pathname-name }}</li>
+  <li class="row">
+    <a class="col c2" href="{{ file.princ-to-string }}">
+      {{ file.pathname-name }}.{{ file.pathname-type }}
+    </a>
+  </li>
   {% endfor %}
 </ul>
 {% endblock %}

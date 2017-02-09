@@ -31,7 +31,9 @@
 ;; Execute package definition
 
 (defpackage gitbarrel.djula
-  (:use #:cl #:git-info)
+  (:use #:cl
+        #:git-info
+        #:peyton-utils)
   (:import-from #:gitbarrel.config
                 #:config
                 #:appenv
