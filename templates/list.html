@@ -1,0 +1,13 @@
+{% extends "layouts/default.html" %}
+{% block title %}{{ user }}{% endblock %}
+{% block content %}
+<ul>
+  {% for file in files %}
+  <li class="row">
+    <a class="col c2" href="{{ file.princ-to-string }}">
+      {{ file.pathname-directory.last1 }}
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
