@@ -46,29 +46,49 @@
   (render #P"search.html"
           (list :files (search-for-file |term|))))
 
+(defroute "/users" ()
+  (render #P"list.html"
+          (list :files
+                (mapcar #'(lambda (d) (shorten-directory d "git"))
+                        (remove-if #'filep (list-directory *repositories*))))))
+
 (defroute ("/(.+)/(.+)/(.+)" :regexp :t) (&key captures)
   (let* ((user (first captures))
          (directory (second captures))
          (repository (merge-paths *repositories* user directory))
          (file (third captures)))
-    (render #P"file.html"
-            (list :file (read-file (merge-paths repository file))
-                  :files (tracked-files repository)
-                  :directory directory
-                  :user user))))
+    (if (probe-file (merge-paths repository file))
+        (render #P"file.html"
+                (list :file (read-file (merge-paths repository file))
+                      :files (tracked-files repository)
+                      :directory directory
+                      :user user))
+         (on-exception *web* 404))))
 
 (defroute ("/(.+)/(.+)" :regexp :t) (&key captures)
   (let* ((user (first captures))
-         (directory (second captures))
+         (directory (remove #\/ (second captures)))
          (repository (merge-paths *repositories* user directory)))
-    (render #P"repository.html"
-            (list :directory directory
-                  :user user
-                  :files (tracked-files repository)
-                  :tags (tags repository)
-                  :commits (remove-if-not #'(lambda (c)
-                                              (string= "commit" (log-type c)))
-                                          (logs repository))))))
+    (if (probe-file repository)
+        (render #P"repository.html"
+                (list :directory directory
+                      :user user
+                      :files (tracked-files repository)
+                      :tags (tags repository)
+                      :commits (remove-if-not #'(lambda (c)
+                                                  (string= "commit" (log-type c)))
+                                              (logs repository))))
+        (on-exception *web* 404))))
+
+(defroute ("/(.+)" :regexp :t) (&key captures)
+  (let* ((user (first captures))
+         (repositories (list-directory (merge-paths *repositories* user))))
+    (if repositories
+        (render #P"list.html"
+                (list :files (mapcar #'(lambda (d) (shorten-directory d "git"))
+                                     repositories)
+                      :user user))
+        (on-exception *web* 404))))
 
 ;;
 ;; Error pages
