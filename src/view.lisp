@@ -33,7 +33,7 @@
 (defpackage gitbarrel.djula
   (:use #:cl
         #:git-info
-        #:peyton-utils)
+        #:alexandria)
   (:import-from #:gitbarrel.config
                 #:config
                 #:appenv

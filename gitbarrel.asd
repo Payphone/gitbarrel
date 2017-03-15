@@ -15,6 +15,7 @@
                #:uiop
                #:git-info
                #:files-and-folders
+               #:alexandria
 
                ;; HTML Template
                #:djula)
